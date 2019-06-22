@@ -1,26 +1,26 @@
 let connection = require("./connection.js");
 
 let orm = {
-    selectAll = function(cb) {
+    selectAll: function(cb) {
         var queryString = "SELECT * FROM burgers";
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             cb(result);
         });
     },
-    insertOne = function(name, cb) {
-        var queryString = "INSERT INTO burgers (burger_name, devoured) VALUES ("+name+", false);";
-        connection.query(queryString, function(err, result) {
-            if (err) throw err;
+    insertOne: function(name, cb) {
+        let query = 'INSERT INTO burgers(burger_name, devoured) VALUES (?, ?)'
+        connection.query(query, [name.burger_name, 0], function(err, result) {
+            if (err) {console.error(err.stack)};
             cb(result);
-        });
+    });        
     },
-    updateOne = function(name, cb) {
-        var queryString = "UPDATE burgers SET devoured=true WHERE burger_name="+name;
-        connection.query(queryString, function(err, result) {
-            if (err) throw err;
-            cb(result);
-        });
+    updateOne: function(id, cb) {
+        let query = `UPDATE burgers SET devoured = ? WHERE id = ?`;
+        connection.query(query, [1, id.id], function(err, result) {
+        if (err) {console.error(err.stack)};
+        cb(result);
+    });        
     }
 }
 

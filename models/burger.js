@@ -11,12 +11,11 @@ var burger = {
             cb(res);
         });
     },
-    update: function(name, cb) {
-        orm.update(name, function(res) {
+    update: function(id, cb) {
+        orm.updateOne(id, function(res) {
             cb(res);
         });
     }
 };
-
 
 module.exports = burger;
