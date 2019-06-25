@@ -1,17 +1,17 @@
 var express = require("express");
 var router = express.Router();
-
+// Import models
 var burger = require("../models/burger");
-
+// Create base route which provides all burgers ever created
 router.get("/", function(req, res) {
     burger.all(function(data) {
-        var hbsObject = {
+        var handlebarsObject = {
             burgers: data
         };
-        res.render("index", hbsObject);
+        res.render("index", handlebarsObject);
     });
 });
-
+// Create an api route to add burgers to the database
 router.post("/api/burgers", function(req, res) {
     burger.create({
         "burger_name": req.body.burger_name},
@@ -21,7 +21,7 @@ router.post("/api/burgers", function(req, res) {
         }
     )
 });
-
+// Create an api route to edit burger data, dependent on activating the DEVOUR button
 router.put("/api/burgers/:id", function(req, res) {
    burger.update({
         id: req.params.id
